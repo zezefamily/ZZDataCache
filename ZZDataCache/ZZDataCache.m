@@ -16,11 +16,10 @@ static ZZDataCache *dataCache = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dataCache = [[self alloc]init];
-        dataCache.time = 30 * 60;
+        dataCache.time = 1 * 60;
     });
     return dataCache;
 }
-
 
 - (void)saveData:(NSData *)data withInterfaceParam:(NSMutableDictionary *)param
 {
@@ -64,6 +63,8 @@ static ZZDataCache *dataCache = nil;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:[self getFileLastModifyTimeWithFileName:file]];
     //  判断缓存是否超时
     if(interval >self.time){
+        [[NSFileManager defaultManager]removeItemAtPath:file error:nil];
+        NSLog(@"DATA == %@",[[NSData alloc]initWithContentsOfFile:file]);
         NSLog(@"缓存文件过期");
         return nil;
     }
@@ -90,6 +91,7 @@ static ZZDataCache *dataCache = nil;
 //    return data;
 //}
 
+
 //获取缓存文件最后一次的存储时间
 - (NSDate *)getFileLastModifyTimeWithFileName:(NSString *)fileName
 {
@@ -101,7 +103,7 @@ static ZZDataCache *dataCache = nil;
 {
     NSDictionary * dict = [self getFileAttribute];
     //1兆字节(mb)=1048576字节(b)
-    NSLog(@"缓存文件总大小:%.0f",[[dict objectForKey:NSFileSize]floatValue]);
+    NSLog(@"缓存文件总大小:%.0fB",[[dict objectForKey:NSFileSize]floatValue]);
     return [NSString stringWithFormat:@"%fMB",[[dict objectForKey:NSFileSize]floatValue]/1048576];
 }
 
