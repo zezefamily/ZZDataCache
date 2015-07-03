@@ -14,6 +14,9 @@
     __block NSData *data2;
     
     ZZDataCache *cache;
+    NSMutableDictionary *param1;
+    NSMutableDictionary *param2;
+    
 }
 @property (weak, nonatomic) IBOutlet UIButton *reloadBtl;
 
@@ -29,9 +32,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.reloadBtl.userInteractionEnabled = NO;
+    param1 = [NSMutableDictionary dictionary];
+    [param1 setValue:@"1" forKey:@"getImage"];
+    
+    param2 = [NSMutableDictionary dictionary];
+    [param2 setValue:@"2" forKey:@"getImage"];
     
     cache = [ZZDataCache shareInstance];
+    if([cache readDataWithInterfaceParam:param1]==nil||[cache readDataWithInterfaceParam:param2]==nil){
+        //        重新下载
+        [self downData];
+    }else {
+        //        读取缓存
+        self.fileSizelabel.text = [NSString stringWithFormat:@"缓存数据大小：%@",[cache CacheFileSize]];
+        self.left.image = [UIImage imageWithData:[cache readDataWithInterfaceParam:param1]];
+        self.right.image = [UIImage imageWithData:[cache readDataWithInterfaceParam:param2]];
+    }
     
+/*
     if([cache readDataWithInterfaceTag:110]==nil||[cache readDataWithInterfaceTag:111]==nil){
 //        重新下载
        [self downData];
@@ -44,6 +62,7 @@
         
     }
     
+*/
     
 }
 
@@ -56,8 +75,8 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [cache saveData:data1 withInterfaceTag:110];
-            [cache saveData:data2 withInterfaceTag:111];
+            [cache saveData:data1 withInterfaceParam:param1];
+            [cache saveData:data2 withInterfaceParam:param2];
             self.left.image = [UIImage imageWithData:data1];
             self.right.image = [UIImage imageWithData:data2];
             self.fileSizelabel.text = [NSString stringWithFormat:@"缓存数据大小：%@",[cache CacheFileSize]];

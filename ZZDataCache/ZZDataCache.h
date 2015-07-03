@@ -17,14 +17,16 @@
 +(ZZDataCache *)shareInstance;
 
 /*
- 方法中的tag参数可根据实际情况自行定义(可以请求各种数据的接口URL)
+ 方法中的tag参数可根据实际情况自行定义(可以请求各种数据的接口URL,POST请求参数Param)
 */
 
 //存储缓存文件
-- (void)saveData:(NSData *)data withInterfaceTag:(NSInteger)tag;
+//- (void)saveData:(NSData *)data withInterfaceTag:(NSInteger)tag;
+- (void)saveData:(NSData *)data withInterfaceParam:(NSMutableDictionary *)param;
 
 //读取缓存文件
-- (NSData *)readDataWithInterfaceTag:(NSInteger)tag;
+//- (NSData *)readDataWithInterfaceTag:(NSInteger)tag;
+- (NSData *)readDataWithInterfaceParam:(NSMutableDictionary *)param;
 
 //读取当前缓存文件大小(总值)
 - (NSString *)CacheFileSize;

@@ -21,11 +21,12 @@ static ZZDataCache *dataCache = nil;
     return dataCache;
 }
 
-- (void)saveData:(NSData *)data withInterfaceTag:(NSInteger)tag
+
+- (void)saveData:(NSData *)data withInterfaceParam:(NSMutableDictionary *)param
 {
     NSString *path = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),ZZDataCacheFileName];
     [[NSFileManager defaultManager]createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
-    NSString *md5Name = [[NSString stringWithFormat:@"%ld",tag] MD5Hash];
+    NSString *md5Name = [[NSString stringWithFormat:@"%@",param] MD5Hash];
     NSString *file = [NSString stringWithFormat:@"%@/%@",path,md5Name];
     BOOL save = [data writeToFile:file atomically:YES];
     if(save == YES){
@@ -35,29 +36,64 @@ static ZZDataCache *dataCache = nil;
     }
 }
 
-- (NSData *)readDataWithInterfaceTag:(NSInteger)tag
+//
+//- (void)saveData:(NSData *)data withInterfaceTag:(NSInteger)tag
+//{
+//    NSString *path = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),ZZDataCacheFileName];
+//    [[NSFileManager defaultManager]createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+//    NSString *md5Name = [[NSString stringWithFormat:@"%ld",tag] MD5Hash];
+//    NSString *file = [NSString stringWithFormat:@"%@/%@",path,md5Name];
+//    BOOL save = [data writeToFile:file atomically:YES];
+//    if(save == YES){
+//        NSLog(@"添加缓存数据成功");
+//    }else{
+//        NSLog(@"添加缓存数据错误");
+//    }
+//}
+
+- (NSData *)readDataWithInterfaceParam:(NSMutableDictionary *)param
 {
-    NSLog(@"读取缓存文件");
-    NSString *tagStr = [NSString stringWithFormat:@"%ld",tag];
+    
+    NSString *tagStr = [NSString stringWithFormat:@"%@",param];
     NSString *file = [NSString stringWithFormat:@"%@/Documents/%@/%@",NSHomeDirectory(),ZZDataCacheFileName,[tagStr MD5Hash]];
     if([[NSFileManager defaultManager]fileExistsAtPath:file] == NO){
+        NSLog(@"没有缓存文件");
         return nil;
     }
-//  返回文件已经存在时间
+    //  返回文件已经存在时间
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:[self getFileLastModifyTimeWithFileName:file]];
-//  判断缓存是否超时
+    //  判断缓存是否超时
     if(interval >self.time){
+        NSLog(@"缓存文件过期");
         return nil;
     }
+    NSLog(@"读取缓存文件");
     NSData *data = [[NSData alloc]initWithContentsOfFile:file];
     return data;
 }
+
+//- (NSData *)readDataWithInterfaceTag:(NSInteger)tag
+//{
+//    NSLog(@"读取缓存文件");
+//    NSString *tagStr = [NSString stringWithFormat:@"%ld",tag];
+//    NSString *file = [NSString stringWithFormat:@"%@/Documents/%@/%@",NSHomeDirectory(),ZZDataCacheFileName,[tagStr MD5Hash]];
+//    if([[NSFileManager defaultManager]fileExistsAtPath:file] == NO){
+//        return nil;
+//    }
+////  返回文件已经存在时间
+//    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:[self getFileLastModifyTimeWithFileName:file]];
+////  判断缓存是否超时
+//    if(interval >self.time){
+//        return nil;
+//    }
+//    NSData *data = [[NSData alloc]initWithContentsOfFile:file];
+//    return data;
+//}
 
 //获取缓存文件最后一次的存储时间
 - (NSDate *)getFileLastModifyTimeWithFileName:(NSString *)fileName
 {
     NSDictionary *dict = [[NSFileManager defaultManager]attributesOfItemAtPath:fileName error:nil];
-    //return dict[@"NSFileModificationDate"];
     return [dict objectForKey:NSFileModificationDate];
 }
 
@@ -65,7 +101,7 @@ static ZZDataCache *dataCache = nil;
 {
     NSDictionary * dict = [self getFileAttribute];
     //1兆字节(mb)=1048576字节(b)
-    NSLog(@"....%f",[[dict objectForKey:NSFileSize]floatValue]);
+    NSLog(@"缓存文件总大小:%.0f",[[dict objectForKey:NSFileSize]floatValue]);
     return [NSString stringWithFormat:@"%fMB",[[dict objectForKey:NSFileSize]floatValue]/1048576];
 }
 
