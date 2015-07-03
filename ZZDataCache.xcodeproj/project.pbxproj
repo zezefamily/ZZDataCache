@@ -14,6 +14,8 @@
 		E45C6ACF1B463716003DE0F5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E45C6ACE1B463716003DE0F5 /* Images.xcassets */; };
 		E45C6AD21B463716003DE0F5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E45C6AD01B463716003DE0F5 /* LaunchScreen.xib */; };
 		E45C6ADE1B463716003DE0F5 /* ZZDataCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E45C6ADD1B463716003DE0F5 /* ZZDataCacheTests.m */; };
+		E45C6AEA1B463744003DE0F5 /* ZZDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E45C6AE91B463744003DE0F5 /* ZZDataCache.m */; };
+		E45C6AEE1B46376D003DE0F5 /* NSString+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = E45C6AED1B46376D003DE0F5 /* NSString+Hashing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		E45C6AD71B463716003DE0F5 /* ZZDataCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZZDataCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E45C6ADC1B463716003DE0F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E45C6ADD1B463716003DE0F5 /* ZZDataCacheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZZDataCacheTests.m; sourceTree = "<group>"; };
+		E45C6AE81B463744003DE0F5 /* ZZDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZDataCache.h; sourceTree = "<group>"; };
+		E45C6AE91B463744003DE0F5 /* ZZDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZDataCache.m; sourceTree = "<group>"; };
+		E45C6AEC1B46376D003DE0F5 /* NSString+Hashing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hashing.h"; sourceTree = "<group>"; };
+		E45C6AED1B46376D003DE0F5 /* NSString+Hashing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hashing.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,7 @@
 		E45C6AC01B463716003DE0F5 /* ZZDataCache */ = {
 			isa = PBXGroup;
 			children = (
+				E45C6AE71B46371C003DE0F5 /* Classes */,
 				E45C6AC51B463716003DE0F5 /* AppDelegate.h */,
 				E45C6AC61B463716003DE0F5 /* AppDelegate.m */,
 				E45C6AC81B463716003DE0F5 /* ViewController.h */,
@@ -117,6 +124,25 @@
 				E45C6ADC1B463716003DE0F5 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E45C6AE71B46371C003DE0F5 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E45C6AEB1B46374C003DE0F5 /* MD5 */,
+				E45C6AE81B463744003DE0F5 /* ZZDataCache.h */,
+				E45C6AE91B463744003DE0F5 /* ZZDataCache.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		E45C6AEB1B46374C003DE0F5 /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				E45C6AEC1B46376D003DE0F5 /* NSString+Hashing.h */,
+				E45C6AED1B46376D003DE0F5 /* NSString+Hashing.m */,
+			);
+			name = MD5;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,7 +247,9 @@
 			files = (
 				E45C6ACA1B463716003DE0F5 /* ViewController.m in Sources */,
 				E45C6AC71B463716003DE0F5 /* AppDelegate.m in Sources */,
+				E45C6AEA1B463744003DE0F5 /* ZZDataCache.m in Sources */,
 				E45C6AC41B463716003DE0F5 /* main.m in Sources */,
+				E45C6AEE1B46376D003DE0F5 /* NSString+Hashing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
